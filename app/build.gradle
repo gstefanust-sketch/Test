@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.custom.robloxaudiofix'
+    namespace 'com.google.android.inputmethod.latin'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.custom.robloxaudiofix"
+        applicationId "com.google.android.inputmethod.latin"
         minSdk 26
         targetSdk 34
         versionCode 1
