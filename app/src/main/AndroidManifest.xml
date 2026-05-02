@@ -12,7 +12,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="Force Roblox voice chat audio to TWS A2DP instead of speaker" />
+            android:value="Audio Fix" />
         <meta-data
             android:name="xposedminversion"
             android:value="53" />
