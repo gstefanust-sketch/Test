@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.google.android.inputmethod.latin'
+    namespace 'com.qualcomm.audio.driver.a64'
     compileSdk 34
 
     defaultConfig {
@@ -11,12 +11,14 @@ android {
         minSdk 26
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "3.6.4"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -28,5 +30,4 @@ android {
 
 dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
-    compileOnly 'de.robv.android.xposed:api:82:sources'
 }
