@@ -15,7 +15,3 @@ allprojects {
         maven { url 'https://api.xposed.info/' }
     }
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
