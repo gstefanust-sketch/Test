@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.qualcomm.audio.service'
+    namespace 'com.qualcomm.audio'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.qualcomm.audio.service"
+        applicationId "com.qualcomm.audio"
         minSdk 29
         targetSdk 34
         versionCode 1
