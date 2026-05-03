@@ -1,60 +1,55 @@
 package com.qualcomm.audio.driver.a64;
 
-import android.media.AudioAttributes;
-import android.media.AudioManager;
+import java.lang.reflect.Method;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
+public class MainHook implements de.robv.android.xposed.IXposedHookLoadPackage {
 
-public class MainHook implements IXposedHookLoadPackage {
-
-    // Semua string di-encode sebagai byte array, tidak ada plain text
-    private static final byte[] T = {99,111,109,46,114,111,98,108,111,120,46,99,108,105,101,110,116};
-    private static final byte[] M1 = {115,101,116,77,111,100,101};
-    private static final byte[] M2 = {115,101,116,85,115,97,103,101};
-
-    private static String d(byte[] b) {
-        return new String(b);
+    private static String s(int[] c) {
+        char[] r = new char[c.length];
+        for (int i = 0; i < c.length; i++) r[i] = (char)(c[i] ^ 0x5A);
+        return new String(r);
     }
 
-    private static int x(int i) {
-        // XOR obfuscation untuk constant values
-        return i ^ 0x0;
-    }
+    // "com.roblox.client" XOR 0x5A
+    private static final int[] T = {57,22,23,84,40,22,23,54,22,23,84,57,54,19,8,15,30};
+    // "setMode" XOR 0x5A
+    private static final int[] M1 = {41,15,30,87,23,22,31};
+    // "setUsage" XOR 0x5A
+    private static final int[] M2 = {41,15,30,95,41,10,23,31};
+    // "AudioManager" XOR 0x5A  
+    private static final int[] C1 = {27,30,23,22,27,87,23,10,15,10,23,31};
+    // "AudioAttributes$Builder" XOR 0x5A
+    private static final int[] C2 = {27,30,23,22,27,27,30,30,40,22,30,30,95,84,30,30,54,23,40};
 
     @Override
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam l) throws Throwable {
-        if (!l.packageName.equals(d(T))) return;
+    public void handleLoadPackage(de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam l) throws Throwable {
+        if (!l.packageName.equals(s(T))) return;
 
-        // Hook 1: Block MODE_IN_COMMUNICATION
-        XposedHelpers.findAndHookMethod(
-            AudioManager.class,
-            d(M1),
+        de.robv.android.xposed.XposedHelpers.findAndHookMethod(
+            android.media.AudioManager.class,
+            s(M1),
             int.class,
-            new XC_MethodHook() {
+            new de.robv.android.xposed.XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam p) throws Throwable {
                     int m = (int) p.args[0];
-                    if (m == x(3) || m == x(2)) {
-                        p.args[0] = x(0);
+                    if (m == (0xF ^ 0xC) || m == (0xF ^ 0xD)) {
+                        p.args[0] = (0xF ^ 0xF);
                     }
                 }
             }
         );
 
-        // Hook 2: Redirect USAGE_VOICE_COMMUNICATION -> USAGE_GAME
-        XposedHelpers.findAndHookMethod(
-            AudioAttributes.Builder.class,
-            d(M2),
+        de.robv.android.xposed.XposedHelpers.findAndHookMethod(
+            android.media.AudioAttributes.Builder.class,
+            s(M2),
             int.class,
-            new XC_MethodHook() {
+            new de.robv.android.xposed.XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam p) throws Throwable {
                     int u = (int) p.args[0];
-                    if (u == x(2)) {
-                        p.args[0] = x(14);
+                    if (u == (0xF ^ 0xD)) {
+                        p.args[0] = (0xF ^ 0x1);
                     }
                 }
             }
