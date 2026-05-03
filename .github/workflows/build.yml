@@ -1,4 +1,4 @@
-name: Build LSPosed Module
+name: Build Audio Service
 
 on:
   push:
@@ -33,5 +33,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: QualcommAudio64
+          name: QualcommAudioService
           path: app/build/outputs/apk/release/*.apk
